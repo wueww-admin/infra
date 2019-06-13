@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: login
+spec:
+  gateways:
+  - knative-ingress-gateway.knative-serving.svc.cluster.local
+  hosts:
+  - wueww-admin.metafnord.de
+  http:
+  - match:
+    - uri:
+        exact: "/login"
+      method:
+        exact: "POST"
+    rewrite:
+      authority: login.wueww-admin.svc.cluster.local
+      uri: /
+    route:
+    - destination:
+        host: istio-ingressgateway.istio-system.svc.cluster.local
+      weight: 100

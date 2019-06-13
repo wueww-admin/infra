@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: session
+spec:
+  gateways:
+  - knative-ingress-gateway.knative-serving.svc.cluster.local
+  hosts:
+  - wueww-admin.metafnord.de
+  http:
+  - match:
+    - uri:
+        exact: "/session"
+      method:
+        exact: "GET"
+    rewrite:
+      authority: session-list.wueww-admin.svc.cluster.local
+      uri: /
+    route:
+    - destination:
+        host: istio-ingressgateway.istio-system.svc.cluster.local
+      weight: 100
+  - match:
+    - uri:
+        exact: "/session"
+      method:
+        exact: "POST"
+    rewrite:
+      authority: session-create.wueww-admin.svc.cluster.local
+      uri: /
+    route:
+    - destination:
+        host: istio-ingressgateway.istio-system.svc.cluster.local
+      weight: 100
+  - match:
+    - uri:
+        prefix: "/session/"
+      method:
+        exact: "PATCH"
+    rewrite:
+      authority: session-update.wueww-admin.svc.cluster.local
+      uri: /
+    route:
+    - destination:
+        host: istio-ingressgateway.istio-system.svc.cluster.local
+      weight: 100
