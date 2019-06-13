@@ -74,6 +74,8 @@ helm fetch stable/mysql
 helm template mysql-0.19.0.tgz --name mysql --set mysqlDatabase=wueww --set mysqlUser=wueww --set persistence.storageClass=manual | kubectl apply -f - -n wueww-admin
 ```
 
+Import `database/schema.sql`.
+
 ## Knative Build Templates
 
 ### knative-lambda-runtime-ts-node-10.x
