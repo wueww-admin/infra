@@ -1,0 +1,11 @@
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: default
+spec:
+  origins:
+      - jwt:
+          audiences: [ "wueww-admin.metafnord.de" ]
+          issuer: "wueww-admin.metafnord.de"
+          jwksUri: "https://q0a.de/jwks.json"
+  principalBinding: USE_ORIGIN
