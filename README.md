@@ -78,8 +78,8 @@ Import `database/schema.sql`.
 
 ## Knative Build Templates
 
-### knative-lambda-runtime-ts-node-10.x
+### knative-php73-psr7
 
 ```
-tm deploy buildtemplate -f https://raw.githubusercontent.com/stesie/knative-lambda-runtime-ts-node-10.x/master/buildtemplate.yaml
+tm deploy buildtemplate -f https://raw.githubusercontent.com/stesie/knative-lambda-runtime-php/master/7.3-psr7/buildtemplate.yaml
 ```
