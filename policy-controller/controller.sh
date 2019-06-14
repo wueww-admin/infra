@@ -8,7 +8,7 @@ ns=namespaces/${namespace}
 set -xe
 set -o pipefail
 
-curl -N -s "${base}/apis/serving.knative.dev/v1alpha1/${ns}/revisions/?watch=true" |
+curl -N -s "${base}/apis/serving.knative.dev/v1alpha1/${ns}/revisions/?watch=true&timeoutSeconds=86400" |
 while read -r event; do
     type=$(echo "$event" | jq -r '.type')
     noAuthN=$(echo "$event" | jq -r '.object.metadata.annotations."wueww-admin.metafnord.de/noAuthN"')
