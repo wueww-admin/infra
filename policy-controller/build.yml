@@ -1,0 +1,16 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: docker-build
+spec:
+  serviceAccountName: default
+  source:
+    git:
+      url: https://github.com/wueww-admin/infra.git
+      revision: master
+  steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor:v0.1.0
+    args:
+    - --dockerfile=/workspace/policy-controller/Dockerfile
+    - --destination=knative.registry.svc.cluster.local/wueww-admin/policy-controller
