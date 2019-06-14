@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: policy-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: policy-controller
+  template:
+    metadata:
+      labels:
+        app: policy-controller
+    spec:
+      serviceAccountName: policy-controller
+      containers:
+      - name: kubeapi-proxy
+        image: k8spatterns/kubeapi-proxy
+      - name: policy-controller
+        image: knative.registry.svc.cluster.local/wueww-admin/policy-controller:latest
+        env:
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: policy-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: policy-controller
+rules:
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - revisions
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - authentication.istio.io
+  resources:
+  - policies
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: policy-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: policy-controller
+subjects:
+- kind: ServiceAccount
+  name: policy-controller
