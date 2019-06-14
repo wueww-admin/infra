@@ -1,0 +1,10 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: mysql
+spec:
+  subjects:
+  - user: "*"
+  roleRef:
+    kind: ServiceRole
+    name: "mysql"

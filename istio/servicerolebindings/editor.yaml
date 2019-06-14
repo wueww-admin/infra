@@ -1,0 +1,13 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: editor
+spec:
+  subjects:
+  - user: "*"
+    properties:
+      request.auth.claims[role]: "editor"
+  roleRef:
+    kind: ServiceRole
+    name: "editor"
+
