@@ -5,6 +5,8 @@ metadata:
 spec:
   subjects:
   - user: "*"
+    properties:
+      request.auth.claims[role]: "*"
   roleRef:
     kind: ServiceRole
     name: "authenticated"
